@@ -1,0 +1,357 @@
+```css
+/* ==============================
+   YOU ONLINE STORE 🛒
+   Diseño moderno y colorido
+============================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --azul: #1769ff;
+    --turquesa: #00d6b4;
+    --naranja: #ff6b35;
+    --amarillo: #ffdf45;
+    --blanco: #ffffff;
+    --oscuro: #18233b;
+    --fondo: #f2f7ff;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: var(--fondo);
+    color: var(--oscuro);
+    line-height: 1.6;
+}
+
+/* ENCABEZADO */
+
+header {
+    background: linear-gradient(125deg, #1769ff, #713bff, #00c9b7);
+    color: white;
+    text-align: center;
+    padding: 48px 20px 35px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 0 0 35px 35px;
+    box-shadow: 0 8px 25px #1769ff35;
+}
+
+header h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-shadow: 3px 4px 0 #172b6650;
+}
+
+header h2 {
+    margin-top: 8px;
+    color: var(--amarillo);
+    font-size: 1.5rem;
+}
+
+header p {
+    margin-top: 12px;
+    font-size: 1.05rem;
+}
+
+/* MENÚ DE NAVEGACIÓN */
+
+nav {
+    background: white;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    box-shadow: 0 4px 18px #193b7020;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+nav a {
+    color: var(--azul);
+    text-decoration: none;
+    font-weight: 800;
+    padding: 9px 16px;
+    border-radius: 25px;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    background: var(--azul);
+    color: white;
+    transform: translateY(-3px);
+}
+
+/* CONTENIDO PRINCIPAL */
+
+main {
+    width: 94%;
+    max-width: 1400px;
+    margin: 30px auto;
+}
+
+section {
+    background: white;
+    margin-bottom: 30px;
+    padding: 28px;
+    border-radius: 25px;
+    box-shadow: 0 8px 30px #173c7020;
+    scroll-margin-top: 85px;
+}
+
+section h2 {
+    color: var(--azul);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    margin-bottom: 22px;
+    border-left: 7px solid var(--naranja);
+    padding-left: 14px;
+}
+
+/* TARJETAS DE PRODUCTOS */
+
+article {
+    background: linear-gradient(145deg, #ffffff, #f1f7ff);
+    border: 2px solid #e4edff;
+    border-radius: 22px;
+    padding: 22px;
+    margin: 12px 8px;
+    display: inline-block;
+    vertical-align: top;
+    width: calc(25% - 20px);
+    min-width: 200px;
+    box-shadow: 0 5px 15px #1b4a8010;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+article:hover {
+    transform: translateY(-8px);
+    border-color: var(--turquesa);
+    box-shadow: 0 14px 28px #1769ff25;
+}
+
+article h3,
+article h4 {
+    color: #233b66;
+    font-size: 1.12rem;
+    margin-bottom: 10px;
+}
+
+article p {
+    margin: 7px 0;
+}
+
+/* PRECIOS */
+
+article p:has(+ button) {
+    color: var(--naranja);
+    font-weight: 900;
+}
+
+/* BOTONES */
+
+button {
+    background: linear-gradient(135deg, var(--naranja), #ff963d);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    padding: 12px 17px;
+    margin: 6px 3px;
+    font-size: 0.95rem;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 5px 12px #ff6b3535;
+    transition: transform 0.2s, filter 0.2s;
+}
+
+button:hover {
+    transform: scale(1.05);
+    filter: brightness(1.08);
+}
+
+button:active {
+    transform: scale(0.96);
+}
+
+/* CARRITO */
+
+#carrito {
+    background: linear-gradient(135deg, #e5fff8, #eaf1ff);
+    border: 3px solid var(--turquesa);
+}
+
+#carrito h2 {
+    color: #008e79;
+}
+
+#carrito article {
+    background: white;
+    border-color: #b5f3e5;
+}
+
+#carrito h3 {
+    color: #087e6c;
+}
+
+#carrito button {
+    background: linear-gradient(135deg, #087eec, #6347ff);
+    box-shadow: 0 5px 12px #1769ff25;
+}
+
+/* OFERTAS */
+
+#ofertas {
+    background: linear-gradient(135deg, #fff2c5, #ffe1d6);
+    border: 2px solid #ffcf54;
+}
+
+#ofertas h2 {
+    color: #e65321;
+}
+
+/* FORMULARIO DE PEDIDOS */
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+label {
+    font-weight: 700;
+    color: #30476e;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 14px;
+    border: 2px solid #dce7fa;
+    border-radius: 13px;
+    font: inherit;
+    background: #f9fbff;
+    color: var(--oscuro);
+    outline: none;
+    transition: border 0.2s, box-shadow 0.2s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--azul);
+    box-shadow: 0 0 0 4px #1769ff20;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+form button {
+    align-self: flex-start;
+    background: linear-gradient(135deg, #00ae91, #00d6b4);
+    box-shadow: 0 5px 12px #00b99a35;
+}
+
+/* NOSOTROS Y CONTACTO */
+
+#nosotros {
+    background: linear-gradient(135deg, #f1eaff, #ffffff);
+}
+
+#contacto {
+    background: linear-gradient(135deg, #e7f3ff, #ffffff);
+}
+
+#nosotros p,
+#contacto p {
+    margin-bottom: 12px;
+}
+
+/* PIE DE PÁGINA */
+
+footer {
+    background: linear-gradient(120deg, #172c62, #1769ff);
+    color: white;
+    text-align: center;
+    padding: 28px 15px;
+    margin-top: 40px;
+    border-radius: 30px 30px 0 0;
+}
+
+footer p {
+    margin: 5px 0;
+}
+
+/* EFECTO AL SELECCIONAR TEXTO */
+
+::selection {
+    background: var(--turquesa);
+    color: #10233d;
+}
+
+/* TABLETS */
+
+@media (max-width: 1000px) {
+    article {
+        width: calc(33.33% - 20px);
+    }
+
+    nav {
+        position: static;
+    }
+}
+
+/* CELULARES */
+
+@media (max-width: 700px) {
+    header {
+        padding: 35px 15px;
+    }
+
+    nav {
+        gap: 5px;
+        padding: 12px 8px;
+    }
+
+    nav a {
+        padding: 8px 10px;
+        font-size: 0.9rem;
+    }
+
+    main {
+        width: 96%;
+        margin: 18px auto;
+    }
+
+    section {
+        padding: 19px 12px;
+        border-radius: 18px;
+    }
+
+    article {
+        display: block;
+        width: 100%;
+        min-width: 0;
+        margin: 12px 0;
+    }
+
+    button {
+        max-width: 100%;
+    }
+
+    header h1 {
+        letter-spacing: 1px;
+    }
+}
+```
