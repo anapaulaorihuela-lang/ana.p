@@ -1,298 +1,285 @@
+/* =====================================
+   YOU ONLINE STORE 🛒
+   JavaScript - Carrito y pedidos
+===================================== */
 
-// Funciones del supermercado virtual
-// ======================================
+// Número de WhatsApp de Bolivia
+const numeroWhatsApp = "59172821393";
 
-// 1. CREAR EL CARRITO DE COMPRAS
-
+// Carrito de compras
 let carrito = [];
 
+// Elementos del HTML
+const contenidoCarrito = document.getElementById("contenido-carrito");
+const totalCarrito = document.getElementById("total-carrito");
+const botonVaciar = document.getElementById("vaciar-carrito");
+const botonContinuar = document.getElementById("continuar-pedido");
+const formularioPedido = document.getElementById("pedido-form");
 
-// 2. BUSCAR LOS ELEMENTOS DE LA PAGINA
+// Formatear precios
+function formatoPrecio(precio) {
+    return "Bs. " + precio.toFixed(2);
+}
 
-const botonesAgregar = document.querySelectorAll(
-    "article button"
-);
+// Obtener el precio de cada producto
+function obtenerPrecio(texto) {
+    const coincidencia = texto.match(/\d+(?:[.,]\d{1,2})?/);
 
-const seccionCarrito = document.getElementById("carrito");
+    if (!coincidencia) return 0;
 
+    return parseFloat(coincidencia[0].replace(",", "."));
+}
 
-// 3. AGREGAR PRODUCTOS AL CARRITO
+// Mostrar el carrito
+function mostrarCarrito() {
+    if (!contenidoCarrito) return;
 
-botonesAgregar.forEach(function(boton) {
+    contenidoCarrito.innerHTML = "";
 
-    boton.addEventListener("click", function() {
+    if (carrito.length === 0) {
+        contenidoCarrito.innerHTML = "<p>Tu carrito está vacío 🛒</p>";
+    } else {
+        carrito.forEach((producto, indice) => {
+            const subtotal = producto.precio * producto.cantidad;
 
+            const elemento = document.createElement("div");
+            elemento.className = "item-carrito";
+
+            elemento.innerHTML = `
+                <div>
+                    <strong>${producto.nombre}</strong>
+                    <p>${formatoPrecio(producto.precio)} x ${producto.cantidad}</p>
+                    <strong>${formatoPrecio(subtotal)}</strong>
+                </div>
+
+                <div class="controles-carrito">
+                    <button type="button" data-accion="menos" data-indice="${indice}">−</button>
+                    <span>${producto.cantidad}</span>
+                    <button type="button" data-accion="mas" data-indice="${indice}">+</button>
+                    <button type="button" data-accion="eliminar" data-indice="${indice}">🗑️</button>
+                </div>
+            `;
+
+            contenidoCarrito.appendChild(elemento);
+        });
+    }
+
+    const total = carrito.reduce(
+        (suma, producto) => suma + producto.precio * producto.cantidad,
+        0
+    );
+
+    if (totalCarrito) {
+        totalCarrito.textContent = formatoPrecio(total);
+    }
+}
+
+// Agregar productos al carrito
+document.addEventListener("click", function(evento) {
+    const boton = evento.target.closest("button");
+
+    if (!boton) return;
+
+    // Detectar botones de productos
+    if (boton.textContent.trim().toLowerCase().includes("agregar al carrito")) {
         const tarjeta = boton.closest("article");
 
-        const nombre = tarjeta.querySelector("h3, h4").textContent;
+        if (!tarjeta) return;
 
-        const parrafoPrecio = Array.from(
-            tarjeta.querySelectorAll("p")
-        ).find(function(p) {
-            return p.textContent.includes("Precio:");
-        });
+        const titulo = tarjeta.querySelector("h3, h4");
+        const precioTexto = tarjeta.querySelector("p");
 
-        if (!parrafoPrecio) {
-            alert("No se encontró el precio del producto.");
+        if (!titulo || !precioTexto) return;
+
+        const nombre = titulo.textContent.trim();
+        const precio = obtenerPrecio(precioTexto.textContent);
+
+        if (precio <= 0) {
+            alert("No se pudo identificar el precio de este producto.");
             return;
         }
 
-        const textoPrecio = parrafoPrecio.textContent;
-
-        const coincidencia = textoPrecio.match(
-            /Bs\.\s*([\d]+(?:[.,]\d+)?)/i
+        const productoExistente = carrito.find(
+            producto => producto.nombre === nombre
         );
-
-        if (!coincidencia) {
-            alert("El precio de este producto no es válido.");
-            return;
-        }
-
-        const precio = Number(
-            coincidencia[1].replace(",", ".")
-        );
-
-        const productoExistente = carrito.find(function(producto) {
-            return producto.nombre === nombre;
-        });
 
         if (productoExistente) {
-
             productoExistente.cantidad++;
-
         } else {
-
             carrito.push({
                 nombre: nombre,
                 precio: precio,
                 cantidad: 1
             });
-
         }
 
         mostrarCarrito();
-
-        alert(nombre + " se agregó al carrito.");
-
-    });
-
+        alert("¡Producto agregado al carrito! 🛒");
+    }
 });
 
+// Controles para aumentar, disminuir o eliminar productos
+if (contenidoCarrito) {
+    contenidoCarrito.addEventListener("click", function(evento) {
+        const boton = evento.target.closest("button");
 
-// 4. MOSTRAR LOS PRODUCTOS DEL CARRITO
+        if (!boton) return;
 
-function mostrarCarrito() {
+        const indice = Number(boton.dataset.indice);
+        const accion = boton.dataset.accion;
 
-    const productos = seccionCarrito.querySelector("p");
+        if (!carrito[indice]) return;
 
-    seccionCarrito.innerHTML = `
-        <h2>🛒 MI CARRITO DE COMPRAS</h2>
-    `;
+        if (accion === "mas") {
+            carrito[indice].cantidad++;
+        }
 
+        if (accion === "menos") {
+            carrito[indice].cantidad--;
+
+            if (carrito[indice].cantidad <= 0) {
+                carrito.splice(indice, 1);
+            }
+        }
+
+        if (accion === "eliminar") {
+            carrito.splice(indice, 1);
+        }
+
+        mostrarCarrito();
+    });
+}
+
+// Vaciar el carrito
+if (botonVaciar) {
+    botonVaciar.addEventListener("click", function() {
+        if (carrito.length === 0) {
+            alert("Tu carrito ya está vacío.");
+            return;
+        }
+
+        if (confirm("¿Estás segura de que deseas vaciar tu carrito?")) {
+            carrito = [];
+            mostrarCarrito();
+        }
+    });
+}
+
+// Preparar el pedido
+function prepararPedido() {
     if (carrito.length === 0) {
-
-        seccionCarrito.innerHTML += `
-            <p>Tu carrito está vacío.</p>
-        `;
-
-    } else {
-
-        carrito.forEach(function(producto, indice) {
-
-            const subtotal = producto.precio * producto.cantidad;
-
-            seccionCarrito.innerHTML += `
-                <article>
-                    <h3>${producto.nombre}</h3>
-
-                    <p>Precio unitario: Bs. ${producto.precio.toFixed(2)}</p>
-
-                    <p>
-                        Cantidad: ${producto.cantidad}
-                    </p>
-
-                    <p>
-                        Subtotal: Bs. ${subtotal.toFixed(2)}
-                    </p>
-
-                    <button
-                        type="button"
-                        onclick="cambiarCantidad(${indice}, -1)">
-                        ➖
-                    </button>
-
-                    <button
-                        type="button"
-                        onclick="cambiarCantidad(${indice}, 1)">
-                        ➕
-                    </button>
-
-                    <button
-                        type="button"
-                        onclick="eliminarProducto(${indice})">
-                        Eliminar
-                    </button>
-                </article>
-            `;
-
-        });
-
-    }
-
-    const total = carrito.reduce(function(suma, producto) {
-        return suma + producto.precio * producto.cantidad;
-    }, 0);
-
-    seccionCarrito.innerHTML += `
-        <h3>Total de la compra: Bs. ${total.toFixed(2)}</h3>
-
-        <button type="button" onclick="vaciarCarrito()">
-            Vaciar carrito
-        </button>
-
-        <button type="button" onclick="irAlPedido()">
-            Continuar con el pedido
-        </button>
-    `;
-
-}
-
-
-// 5. AUMENTAR O DISMINUIR CANTIDADES
-
-function cambiarCantidad(indice, cambio) {
-
-    carrito[indice].cantidad += cambio;
-
-    if (carrito[indice].cantidad <= 0) {
-
-        carrito.splice(indice, 1);
-
-    }
-
-    mostrarCarrito();
-
-}
-
-
-// 6. ELIMINAR UN PRODUCTO
-
-function eliminarProducto(indice) {
-
-    carrito.splice(indice, 1);
-
-    mostrarCarrito();
-
-}
-
-
-// 7. VACIAR TODO EL CARRITO
-
-function vaciarCarrito() {
-
-    carrito = [];
-
-    mostrarCarrito();
-
-}
-
-
-// 8. IR AL FORMULARIO DEL PEDIDO
-
-function irAlPedido() {
-
-    if (carrito.length === 0) {
-
-        alert("Primero agrega productos a tu carrito.");
-
-        return;
-
+        alert("Primero debes agregar productos al carrito.");
+        return false;
     }
 
     const lista = document.getElementById("lista");
 
     if (lista) {
-
-        lista.value = carrito.map(function(producto) {
-
-            return producto.nombre +
-                " x " + producto.cantidad +
-                " = Bs. " +
-                (producto.precio * producto.cantidad).toFixed(2);
-
+        lista.value = carrito.map(producto => {
+            return `${producto.nombre} x${producto.cantidad} - ${formatoPrecio(producto.precio * producto.cantidad)}`;
         }).join("\n");
-
     }
 
-    document.getElementById("pedido").scrollIntoView({
-        behavior: "smooth"
-    });
-
+    return true;
 }
 
+// Continuar con el pedido
+if (botonContinuar) {
+    botonContinuar.addEventListener("click", function() {
+        if (!prepararPedido()) return;
 
-// 9. VALIDAR EL FORMULARIO
+        const formulario = document.getElementById("pedido");
 
-const formulario = document.querySelector("#pedido form");
+        if (formulario) {
+            formulario.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        }
+    });
+}
 
-formulario.addEventListener("submit", function(evento) {
+// Mostrar u ocultar dirección según el tipo de entrega
+const tipoEntrega = document.getElementById("entrega");
+const campoDireccion = document.getElementById("direccion");
 
-    evento.preventDefault();
+function actualizarDireccion() {
+    if (!tipoEntrega || !campoDireccion) return;
 
-    if (carrito.length === 0) {
+    const contenedor = campoDireccion.closest("div");
 
-        alert("Agrega productos al carrito antes de enviar el pedido.");
-
-        return;
-
+    if (contenedor) {
+        contenedor.style.display =
+            tipoEntrega.value === "domicilio" ? "block" : "none";
     }
+}
 
-    const nombre = document.getElementById("nombre").value.trim();
+if (tipoEntrega) {
+    tipoEntrega.addEventListener("change", actualizarDireccion);
+    actualizarDireccion();
+}
 
-    const telefono = document.getElementById("telefono").value.trim();
+// Enviar pedido por WhatsApp
+if (formularioPedido) {
+    formularioPedido.addEventListener("submit", function(evento) {
+        evento.preventDefault();
 
-    const entrega = document.getElementById("entrega").value;
+        if (!prepararPedido()) return;
 
-    const direccion = document.getElementById("direccion").value.trim();
+        const nombre = document.getElementById("nombre").value.trim();
+        const telefono = document.getElementById("telefono").value.trim();
+        const entrega = document.getElementById("entrega").value;
+        const direccion = document.getElementById("direccion").value.trim();
+        const observaciones = document.getElementById("observaciones").value.trim();
 
-    if (!nombre || !telefono || !entrega) {
+        if (!nombre || !telefono) {
+            alert("Por favor, completa tu nombre y teléfono.");
+            return;
+        }
 
-        alert("Por favor, completa los campos obligatorios.");
+        if (entrega === "domicilio" && !direccion) {
+            alert("Por favor, escribe tu dirección.");
+            return;
+        }
 
-        return;
+        const total = carrito.reduce(
+            (suma, producto) => suma + producto.precio * producto.cantidad,
+            0
+        );
 
-    }
+        let mensaje = `¡Hola! 👋 Quiero realizar un pedido en YOU ONLINE STORE.\n\n`;
 
-    if (entrega === "domicilio" && !direccion) {
+        mensaje += `👤 Nombre: ${nombre}\n`;
+        mensaje += `📱 Teléfono: ${telefono}\n\n`;
+        mensaje += `🛒 MI PEDIDO:\n`;
 
-        alert("Escribe tu dirección para la entrega a domicilio.");
+        carrito.forEach(producto => {
+            mensaje += `• ${producto.nombre} x${producto.cantidad} = ${formatoPrecio(producto.precio * producto.cantidad)}\n`;
+        });
 
-        return;
+        mensaje += `\n💰 TOTAL: ${formatoPrecio(total)}\n`;
 
-    }
+        mensaje += `\n🚚 Tipo de entrega: ${
+            entrega === "domicilio" ? "A domicilio" : "Recoger en tienda"
+        }\n`;
 
-    const total = carrito.reduce(function(suma, producto) {
+        if (entrega === "domicilio") {
+            mensaje += `📍 Dirección: ${direccion}\n`;
+        }
 
-        return suma + producto.precio * producto.cantidad;
+        if (observaciones) {
+            mensaje += `\n📝 Observaciones: ${observaciones}\n`;
+        }
 
-    }, 0);
+        mensaje += `\n¡Gracias!`;
 
-    alert(
-        "¡Pedido preparado correctamente!\n\n" +
-        "Cliente: " + nombre + "\n" +
-        "Celular: " + telefono + "\n" +
-        "Entrega: " +
-        (entrega === "tienda" ? "Recoger en tienda" : "A domicilio") +
-        "\nTotal: Bs. " + total.toFixed(2) +
-        "\n\nPara confirmar tu compra, comunícate con la tienda."
-    );
+        const enlace = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
 
-});
+        window.open(enlace, "_blank");
+    });
+}
 
-
-// 10. MOSTRAR EL CARRITO VACÍO AL INICIAR
-
+// Mostrar el carrito al iniciar
 mostrarCarrito();
 
-console.log("You Online Store está listo.");
-```
+     
