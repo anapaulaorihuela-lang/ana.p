@@ -1,357 +1,432 @@
-```css
-/* ==============================
-   YOU ONLINE STORE 🛒
-   Diseño moderno y colorido
-============================== */
+/* ==========================================
+   MAJBOLOCA - YOU ONLINE STORE
+   Diseño moderno, colorido y responsive
+========================================== */
+
+/* CONFIGURACIÓN GENERAL */
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    scroll-behavior: smooth;
 }
 
 :root {
     --azul: #1769ff;
-    --turquesa: #00d6b4;
-    --naranja: #ff6b35;
-    --amarillo: #ffdf45;
+    --azul-oscuro: #1246a8;
+    --celeste: #eaf4ff;
+    --turquesa: #20c9c3;
+    --naranja: #ff8b35;
+    --amarillo: #ffcf4a;
     --blanco: #ffffff;
-    --oscuro: #18233b;
-    --fondo: #f2f7ff;
-}
-
-html {
-    scroll-behavior: smooth;
+    --gris: #f4f7fc;
+    --texto: #26344a;
+    --sombra: 0 5px 18px rgba(20, 65, 120, 0.10);
 }
 
 body {
-    font-family: "Segoe UI", Arial, sans-serif;
-    background: var(--fondo);
-    color: var(--oscuro);
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: var(--gris);
+    color: var(--texto);
     line-height: 1.6;
 }
 
-/* ENCABEZADO */
+/* ==========================================
+   ENCABEZADO
+========================================== */
 
 header {
-    background: linear-gradient(125deg, #1769ff, #713bff, #00c9b7);
+    background: linear-gradient(135deg, #1769ff, #20c9c3);
     color: white;
     text-align: center;
-    padding: 48px 20px 35px;
-    position: relative;
-    overflow: hidden;
-    border-radius: 0 0 35px 35px;
-    box-shadow: 0 8px 25px #1769ff35;
+    padding: 35px 20px 25px;
 }
 
 header h1 {
-    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-size: 42px;
     font-weight: 900;
     letter-spacing: 2px;
-    text-shadow: 3px 4px 0 #172b6650;
+    text-shadow: 3px 4px 5px rgba(0, 0, 0, 0.25);
 }
 
 header h2 {
-    margin-top: 8px;
-    color: var(--amarillo);
-    font-size: 1.5rem;
+    font-size: 21px;
+    letter-spacing: 2px;
+    margin-top: 5px;
 }
 
 header p {
-    margin-top: 12px;
-    font-size: 1.05rem;
+    margin-top: 8px;
+    font-size: 15px;
 }
 
-/* MENÚ DE NAVEGACIÓN */
+/* ==========================================
+   MENÚ DE NAVEGACIÓN
+========================================== */
 
 nav {
-    background: white;
-    padding: 15px;
     display: flex;
     justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
     gap: 10px;
-    box-shadow: 0 4px 18px #193b7020;
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    margin-top: 25px;
 }
 
 nav a {
-    color: var(--azul);
     text-decoration: none;
-    font-weight: 800;
-    padding: 9px 16px;
+    color: white;
+    background: rgba(255, 255, 255, 0.18);
+    padding: 9px 15px;
     border-radius: 25px;
+    font-size: 14px;
+    font-weight: bold;
     transition: 0.3s;
 }
 
 nav a:hover {
-    background: var(--azul);
-    color: white;
+    background: white;
+    color: var(--azul);
     transform: translateY(-3px);
 }
 
-/* CONTENIDO PRINCIPAL */
+/* ==========================================
+   CONTENIDO PRINCIPAL
+========================================== */
 
 main {
     width: 94%;
-    max-width: 1400px;
+    max-width: 1250px;
     margin: 30px auto;
 }
 
 section {
     background: white;
-    margin-bottom: 30px;
     padding: 28px;
-    border-radius: 25px;
-    box-shadow: 0 8px 30px #173c7020;
-    scroll-margin-top: 85px;
+    margin-bottom: 30px;
+    border-radius: 20px;
+    box-shadow: var(--sombra);
 }
 
 section h2 {
     color: var(--azul);
-    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-size: 25px;
+    text-align: center;
     margin-bottom: 22px;
-    border-left: 7px solid var(--naranja);
-    padding-left: 14px;
 }
 
-/* TARJETAS DE PRODUCTOS */
-
-article {
-    background: linear-gradient(145deg, #ffffff, #f1f7ff);
-    border: 2px solid #e4edff;
-    border-radius: 22px;
-    padding: 22px;
-    margin: 12px 8px;
-    display: inline-block;
-    vertical-align: top;
-    width: calc(25% - 20px);
-    min-width: 200px;
-    box-shadow: 0 5px 15px #1b4a8010;
-    transition: transform 0.3s, box-shadow 0.3s;
+section h3 {
+    color: var(--azul-oscuro);
+    margin: 15px 0;
 }
 
-article:hover {
-    transform: translateY(-8px);
+section p {
+    margin-bottom: 12px;
+}
+
+/* ==========================================
+   BIENVENIDA
+========================================== */
+
+.bienvenida {
+    text-align: center;
+    background: linear-gradient(135deg, #ffffff, #e5f8ff);
+    border: 2px solid #d5edff;
+}
+
+.bienvenida h2 {
+    font-size: 29px;
+}
+
+.bienvenida h3 {
+    color: var(--naranja);
+    font-size: 21px;
+    margin-top: 20px;
+}
+
+/* ==========================================
+   PRODUCTOS
+========================================== */
+
+section:not(.bienvenida):not(#carrito):not(#pedido):not(#nosotros):not(#contacto):not(#ofertas) {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 20px;
+}
+
+section:not(.bienvenida):not(#carrito):not(#pedido):not(#nosotros):not(#contacto):not(#ofertas) h2 {
+    grid-column: 1 / -1;
+}
+
+section article {
+    background: #ffffff;
+    border: 1px solid #e3edfa;
+    border-radius: 17px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(20, 65, 120, 0.08);
+    transition: 0.3s;
+}
+
+section article:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 9px 20px rgba(23, 105, 255, 0.15);
     border-color: var(--turquesa);
-    box-shadow: 0 14px 28px #1769ff25;
 }
 
 article h3,
 article h4 {
-    color: #233b66;
-    font-size: 1.12rem;
-    margin-bottom: 10px;
+    color: var(--azul-oscuro);
+    font-size: 17px;
+    margin: 10px 0;
 }
 
 article p {
-    margin: 7px 0;
+    color: #e87520;
+    font-weight: bold;
+    font-size: 16px;
 }
 
-/* PRECIOS */
+/* ==========================================
+   IMÁGENES DE PRODUCTOS
+========================================== */
 
-article p:has(+ button) {
-    color: var(--naranja);
-    font-weight: 900;
+.producto-imagen {
+    display: block;
+    width: 100%;
+    height: 155px;
+    object-fit: contain;
+    background: #f5f9ff;
+    border-radius: 12px;
+    padding: 8px;
+    margin-bottom: 12px;
 }
 
-/* BOTONES */
+/* ==========================================
+   BOTONES
+========================================== */
 
 button {
-    background: linear-gradient(135deg, var(--naranja), #ff963d);
+    background: linear-gradient(135deg, #1769ff, #20bfc9);
     color: white;
     border: none;
-    border-radius: 14px;
-    padding: 12px 17px;
-    margin: 6px 3px;
-    font-size: 0.95rem;
-    font-weight: 800;
+    padding: 11px 17px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: bold;
     cursor: pointer;
-    box-shadow: 0 5px 12px #ff6b3535;
-    transition: transform 0.2s, filter 0.2s;
+    transition: 0.3s;
 }
 
 button:hover {
-    transform: scale(1.05);
-    filter: brightness(1.08);
+    background: linear-gradient(135deg, #1246a8, #159b9c);
+    transform: scale(1.04);
 }
 
-button:active {
-    transform: scale(0.96);
-}
-
-/* CARRITO */
-
-#carrito {
-    background: linear-gradient(135deg, #e5fff8, #eaf1ff);
-    border: 3px solid var(--turquesa);
-}
-
-#carrito h2 {
-    color: #008e79;
-}
-
-#carrito article {
-    background: white;
-    border-color: #b5f3e5;
-}
-
-#carrito h3 {
-    color: #087e6c;
-}
-
-#carrito button {
-    background: linear-gradient(135deg, #087eec, #6347ff);
-    box-shadow: 0 5px 12px #1769ff25;
-}
-
-/* OFERTAS */
+/* ==========================================
+   OFERTAS
+========================================== */
 
 #ofertas {
-    background: linear-gradient(135deg, #fff2c5, #ffe1d6);
-    border: 2px solid #ffcf54;
+    text-align: center;
+    background: linear-gradient(135deg, #fff5df, #fff0e9);
+    border: 2px dashed var(--naranja);
 }
 
 #ofertas h2 {
-    color: #e65321;
+    color: #e87520;
 }
 
-/* FORMULARIO DE PEDIDOS */
+/* ==========================================
+   CARRITO
+========================================== */
 
-form {
+#carrito {
+    background: linear-gradient(135deg, #eaf4ff, #e8fffc);
+    border: 2px solid #c9e9ff;
+}
+
+#contenido-carrito {
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
 
-label {
-    font-weight: 700;
-    color: #30476e;
+#contenido-carrito > div {
+    background: white;
+    border-radius: 12px;
+    padding: 15px;
+    border: 1px solid #dcecff;
 }
 
-input,
-select,
-textarea {
+#total-carrito {
+    text-align: right;
+    color: var(--azul-oscuro);
+    font-size: 22px;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+#vaciar-carrito {
+    background: #e74c3c;
+    margin: 5px;
+}
+
+#continuar-pedido {
+    background: #159b76;
+    margin: 5px;
+}
+
+/* ==========================================
+   FORMULARIO DE PEDIDOS
+========================================== */
+
+#pedido {
+    background: white;
+}
+
+#pedido-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 650px;
+    margin: auto;
+}
+
+#pedido-form label {
+    color: var(--azul-oscuro);
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+#pedido-form input,
+#pedido-form select,
+#pedido-form textarea {
     width: 100%;
-    padding: 14px;
-    border: 2px solid #dce7fa;
-    border-radius: 13px;
-    font: inherit;
-    background: #f9fbff;
-    color: var(--oscuro);
+    padding: 13px;
+    border: 1px solid #cbd9ec;
+    border-radius: 10px;
+    font-size: 15px;
+    font-family: inherit;
     outline: none;
-    transition: border 0.2s, box-shadow 0.2s;
+    background: #f9fbff;
 }
 
-input:focus,
-select:focus,
-textarea:focus {
+#pedido-form input:focus,
+#pedido-form select:focus,
+#pedido-form textarea:focus {
     border-color: var(--azul);
-    box-shadow: 0 0 0 4px #1769ff20;
+    box-shadow: 0 0 5px rgba(23, 105, 255, 0.2);
 }
 
-textarea {
-    resize: vertical;
-    min-height: 100px;
+#pedido-form button {
+    margin-top: 15px;
+    padding: 14px;
+    font-size: 16px;
+    background: #20a85a;
 }
 
-form button {
-    align-self: flex-start;
-    background: linear-gradient(135deg, #00ae91, #00d6b4);
-    box-shadow: 0 5px 12px #00b99a35;
-}
+/* ==========================================
+   SOBRE NOSOTROS Y CONTACTO
+========================================== */
 
-/* NOSOTROS Y CONTACTO */
-
-#nosotros {
-    background: linear-gradient(135deg, #f1eaff, #ffffff);
-}
-
+#nosotros,
 #contacto {
-    background: linear-gradient(135deg, #e7f3ff, #ffffff);
+    background: linear-gradient(135deg, #ffffff, #eaf4ff);
 }
 
 #nosotros p,
 #contacto p {
-    margin-bottom: 12px;
+    text-align: center;
 }
 
-/* PIE DE PÁGINA */
+#contacto {
+    text-align: center;
+}
+
+/* ==========================================
+   PIE DE PÁGINA
+========================================== */
 
 footer {
-    background: linear-gradient(120deg, #172c62, #1769ff);
+    background: #123d78;
     color: white;
     text-align: center;
-    padding: 28px 15px;
-    margin-top: 40px;
-    border-radius: 30px 30px 0 0;
+    padding: 25px 15px;
+    margin-top: 30px;
 }
 
 footer p {
     margin: 5px 0;
+    font-size: 14px;
 }
 
-/* EFECTO AL SELECCIONAR TEXTO */
+/* ==========================================
+   DISEÑO PARA CELULARES
+========================================== */
 
-::selection {
-    background: var(--turquesa);
-    color: #10233d;
-}
+@media (max-width: 600px) {
 
-/* TABLETS */
+    header h1 {
+        font-size: 30px;
+    }
 
-@media (max-width: 1000px) {
-    article {
-        width: calc(33.33% - 20px);
+    header h2 {
+        font-size: 17px;
     }
 
     nav {
-        position: static;
-    }
-}
-
-/* CELULARES */
-
-@media (max-width: 700px) {
-    header {
-        padding: 35px 15px;
-    }
-
-    nav {
-        gap: 5px;
-        padding: 12px 8px;
+        gap: 7px;
     }
 
     nav a {
-        padding: 8px 10px;
-        font-size: 0.9rem;
+        font-size: 12px;
+        padding: 8px 11px;
     }
 
     main {
         width: 96%;
-        margin: 18px auto;
     }
 
     section {
-        padding: 19px 12px;
-        border-radius: 18px;
+        padding: 18px;
+    }
+
+    section:not(.bienvenida):not(#carrito):not(#pedido):not(#nosotros):not(#contacto):not(#ofertas) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
     }
 
     article {
-        display: block;
-        width: 100%;
-        min-width: 0;
-        margin: 12px 0;
+        padding: 10px;
     }
 
-    button {
-        max-width: 100%;
+    article h3,
+    article h4 {
+        font-size: 14px;
     }
 
-    header h1 {
-        letter-spacing: 1px;
+    article p {
+        font-size: 13px;
+    }
+
+    article button {
+        font-size: 11px;
+        padding: 9px 10px;
+    }
+
+    .producto-imagen {
+        height: 115px;
+    }
+
+    section h2 {
+        font-size: 21px;
     }
 }
-```
+
+@media (max-width: 350px) {
+    section:not(.bienvenida):not(#carrito):not(#pedido):not(#nosotros):not(#contacto):not(#ofertas) {
+        grid-template-columns: 1fr;
+    }
+}
